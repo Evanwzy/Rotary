@@ -57,9 +57,7 @@
 - (void)ourRotaryPressed {
     NSLog(@"1");
     RotaryHomeViewController * center = [[RotaryHomeViewController alloc] init];
-    
     UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:center];
-    
     [self.mm_drawerController
      setCenterViewController:nav
      withCloseAnimation:YES

@@ -8,6 +8,13 @@
 
 #import "RotaryInfoViewController.h"
 
+
+#import "RotaryRightSlideViewController.h"
+#import "UIViewController+MMDrawerController.h"
+#import "MMExampleDrawerVisualStateManager.h"
+#import "MMDrawerBarButtonItem.h"
+#import "MMCenterTableViewCell.h"
+
 @interface RotaryInfoViewController ()
 
 @end
@@ -27,12 +34,26 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self setupRightMenuButton];
+}
+-(void)viewDidAppear:(BOOL)animated {
+    self.navigationController.navigationBarHidden =NO;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+//naviBarItem Action
+- (void)setupRightMenuButton{
+    MMDrawerBarButtonItem * rightDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(rightDrawerButtonPress:)];
+    [self.navigationItem setRightBarButtonItem:rightDrawerButton animated:YES];
+}
+
+-(void)rightDrawerButtonPress:(id)sender{
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideRight animated:YES completion:nil];
 }
 
 @end

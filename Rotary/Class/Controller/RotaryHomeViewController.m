@@ -35,12 +35,18 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    //setting navigationbar
+    [self.navigationController.navigationBar setTintColor:[UIColor colorWithRed:66.0/255.0
+                                                                                   green:69.0/255.0
+                                                                                    blue:71.0/255.0
+                                                                                   alpha:1.0]];
+    
     [[MMExampleDrawerVisualStateManager sharedManager] setRightDrawerAnimationType:2];
     [self setupRightMenuButton];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    
+    self.navigationController.navigationBarHidden =YES;
 }
 
 - (void)didReceiveMemoryWarning

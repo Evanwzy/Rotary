@@ -23,7 +23,6 @@
     UIViewController * rightSideDrawerViewController = [[RotaryRightSlideViewController alloc] init];
     
     _naviCtr =[[UINavigationController alloc]initWithRootViewController:centerViewController];
-    _naviCtr.navigationBarHidden =YES;
     
     MMDrawerController * drawerController = [[MMDrawerController alloc]
                                              initWithCenterViewController:_naviCtr rightDrawerViewController:rightSideDrawerViewController];
