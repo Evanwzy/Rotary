@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RotaryHomeViewController.h"
 
 @interface RotaryAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (retain, nonatomic) UINavigationController *naviCtr;
 
 @end

@@ -8,12 +8,43 @@
 
 #import "RotaryAppDelegate.h"
 
+#import "RotaryRightSlideViewController.h"
+#import "RotaryHomeViewController.h"
+#import "MMExampleDrawerVisualStateManager.h"
+#import "MMDrawerVisualState.h"
+#import "MMDrawerController.h"
+
 @implementation RotaryAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    UIViewController * centerViewController = [[RotaryHomeViewController alloc] init];
+    
+    UIViewController * rightSideDrawerViewController = [[RotaryRightSlideViewController alloc] init];
+    
+    _naviCtr =[[UINavigationController alloc]initWithRootViewController:centerViewController];
+    _naviCtr.navigationBarHidden =YES;
+    
+    MMDrawerController * drawerController = [[MMDrawerController alloc]
+                                             initWithCenterViewController:_naviCtr rightDrawerViewController:rightSideDrawerViewController];
+    [drawerController setMaximumRightDrawerWidth:200.0];
+    [drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+    [drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
+    
+    [drawerController
+     setDrawerVisualStateBlock:^(MMDrawerController *drawerController, MMDrawerSide drawerSide, CGFloat percentVisible) {
+         MMDrawerControllerDrawerVisualStateBlock block;
+         block = [[MMExampleDrawerVisualStateManager sharedManager]
+                  drawerVisualStateBlockForDrawerSide:drawerSide];
+         if(block){
+             block(drawerController, drawerSide, percentVisible);
+         }
+     }];
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    self.window.rootViewController =drawerController;
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
