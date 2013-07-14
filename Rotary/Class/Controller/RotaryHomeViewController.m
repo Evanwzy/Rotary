@@ -37,15 +37,15 @@
     // Do any additional setup after loading the view from its nib.
     //setting navigationbar
     [self.navigationController setTitle:@"國際扶輪"];
-    self.navigationController.navigationBarHidden =YES;
+    
     
     [[MMExampleDrawerVisualStateManager sharedManager] setRightDrawerAnimationType:2];
     [self setupRightMenuButton];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    self.navigationController.navigationBarHidden =YES;
 }
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
