@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RotaryNetworkingManager.h"
 
-@interface RotaryHomeViewController : UIViewController
+@interface RotaryHomeViewController : UIViewController <NetworkingRequestManagerTestDelegate,NetworkingRequestManagerFirstDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *InfoBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *img_1;
 
 
 - (IBAction)homeBtnPressed:(UIButton *)sender;
+- (IBAction)testBtn:(id)sender;
+- (IBAction)Btn3:(id)sender;
 
 @end

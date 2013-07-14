@@ -44,6 +44,7 @@
     [ourRotaryBtn setTitle:@"Our Rotary" forState:UIControlStateNormal];
     [ourRotaryBtn addTarget:self action:@selector(ourRotaryPressed) forControlEvents:UIControlEventTouchUpInside];
     
+    
     //add subview
     [self.view addSubview:ourRotaryBtn];
 }

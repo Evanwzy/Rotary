@@ -7,7 +7,7 @@
 //
 
 #import "RotaryHomeViewController.h"
-#import "RotaryInfoViewController.h"
+#import "RotaryInterViewController.h"
 
 #import "RotaryRightSlideViewController.h"
 #import "UIViewController+MMDrawerController.h"
@@ -36,17 +36,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     //setting navigationbar
-    [self.navigationController.navigationBar setTintColor:[UIColor colorWithRed:66.0/255.0
-                                                                                   green:69.0/255.0
-                                                                                    blue:71.0/255.0
-                                                                                   alpha:1.0]];
+    [self.navigationController setTitle:@"國際扶輪"];
+    self.navigationController.navigationBarHidden =YES;
     
     [[MMExampleDrawerVisualStateManager sharedManager] setRightDrawerAnimationType:2];
     [self setupRightMenuButton];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    self.navigationController.navigationBarHidden =YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,20 +79,41 @@
     }
 }
 
+- (IBAction)testBtn:(id)sender {
+    RotaryNetworkingManager *manager =[RotaryNetworkingManager sharedManager];
+    manager.testDelegate =self;
+    [manager testNetWorking];
+}
+
+- (IBAction)Btn3:(id)sender {
+    RotaryNetworkingManager *manager=[RotaryNetworkingManager sharedManager];
+    manager.firstDelegate=self;
+    [manager firstNetWorking];
+}
+
+-(void)firstQueryData:(NSDictionary *)dict{
+    [dict setValue:@"aaa" forKey:@"msg"];
+    NSLog(@"%@",dict);
+}
+
+- (void)testQueryData:(NSDictionary *)dict{
+    NSLog(@"%@",dict);
+}
+
 #pragma mark - buttonAction
 - (void)jumpToInfoCtr {
-    
-    RotaryInfoViewController *ivCtr =[[RotaryInfoViewController alloc]init];
-    
-    [self.navigationController pushViewController:ivCtr animated:YES];
-    
+    RotaryInterViewController *ivCtr =[[RotaryInterViewController alloc]init];
+    [self.navigationController pushViewController:ivCtr animated:NO];       
 }
 
 //naviBarItem Action
 - (void)setupRightMenuButton{
     MMDrawerBarButtonItem * rightDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(rightDrawerButtonPress:)];
     [self.navigationItem setRightBarButtonItem:rightDrawerButton animated:YES];
+    
 }
+
+
 
 -(void)rightDrawerButtonPress:(id)sender{
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideRight animated:YES completion:nil];
