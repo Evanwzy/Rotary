@@ -21,10 +21,13 @@
 @property (retain, nonatomic) UIButton *knowledgeBtn;
 @property (retain, nonatomic) UIButton *historyBtn;
 
+@property (retain, nonatomic) UIImageView   *lineImgView;
+@property (retain, nonatomic) UIImageView   *lineImgView2;
 @property (retain, nonatomic) UIScrollView  *masterView;
 @property (retain, nonatomic) UIView        *knowledgeView;
-@property (retain, nonatomic) UIScrollView        *themeView;
+@property (retain, nonatomic) UIScrollView  *themeView;
 @property (retain, nonatomic) UIView        *historyView;
 @property (retain, nonatomic) UIView        *responsibilityView;
+@property (retain, nonatomic) UIView        *masterHistory;
 
 @end

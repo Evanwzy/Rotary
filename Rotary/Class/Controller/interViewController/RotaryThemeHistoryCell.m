@@ -1,21 +1,20 @@
 //
-//  RotaryHistoryCell.m
+//  RotaryThemeHistoryCell.m
 //  Rotary
 //
-//  Created by Evan on 13-7-15.
+//  Created by Evan on 13-7-18.
 //  Copyright (c) 2013年 Evan. All rights reserved.
 //
 
-#import "RotaryHistoryCell.h"
+#import "RotaryThemeHistoryCell.h"
 
-@implementation RotaryHistoryCell
+@implementation RotaryThemeHistoryCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
-        
     }
     return self;
 }
@@ -27,4 +26,6 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)themeBtnPressed:(id)sender {
+}
 @end

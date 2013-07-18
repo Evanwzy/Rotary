@@ -15,6 +15,8 @@
 #import "MMDrawerBarButtonItem.h"
 #import "MMCenterTableViewCell.h"
 #import "RotaryHistoryCell.h"
+#import "RotaryMasterHistoryCell.h"
+#import "RotaryThemeHistoryCell.h"
 
 @interface RotaryInterViewController ()
 
@@ -128,13 +130,13 @@
     [_earlierBtn setTitleColor:[UIColor darkTextColor] forState:UIControlStateSelected];
     [_earlierBtn setBackgroundImage:[UIImage imageNamed:@"inter_earlier.png"] forState:(UIControlStateNormal)];
     _earlierBtn.frame =CGRectMake(277.5f, 13.0f, 35.0f, 18.0f);
-    [_earlierBtn addTarget:self action:@selector(leftDrawerButtonPress:) forControlEvents:UIControlEventTouchUpInside];
+    [_earlierBtn addTarget:self action:@selector(historyBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     //back button
     _backBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-    [_backBtn setFrame:CGRectMake(0.0f, 0.0f, 40.0f, 40.0f)];
+    [_backBtn setFrame:CGRectMake(10.0f, 11.5f, 28.0f, 21.0f)];
     [_backBtn setBackgroundColor:[UIColor clearColor]];
-    [_backBtn setBackgroundImage:[UIImage imageNamed:@"111.jpg"] forState:UIControlStateNormal];
+    [_backBtn setBackgroundImage:[UIImage imageNamed:@"knowledge_back.png"] forState:UIControlStateNormal];
     [_backBtn setHidden:YES];
     [_backBtn addTarget:self action:@selector(bottomKnowledgeBtnAction:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -149,6 +151,13 @@
     _masterLab.textColor=[UIColor whiteColor];
     _masterLab.textAlignment=UITextAlignmentCenter;
     
+    _lineImgView=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"inter_Btntabline.png"]];
+    _lineImgView.frame =CGRectMake(55.0f, 0.0f, 1.0f, 44.0f);
+    [_lineImgView setHidden:YES];
+    _lineImgView2=[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"inter_Btntabline.png"]];
+    _lineImgView2.frame =CGRectMake(265.0f, 0.0f, 1.0f, 44.0f);
+    [_lineImgView2 setHidden:NO];
+    
     [self.view addSubview:bottomImgView];
     [self.view addSubview:_riMasterBtn];
     [self.view addSubview:_themeBtn];
@@ -157,10 +166,12 @@
     [self.view addSubview:line1ImgView];
     [self.view addSubview:line2ImgView];
     [self.view addSubview:line3ImgView];
-   
+    
     [self.view addSubview:_masterLab];
     [self.view addSubview:_earlierBtn];
     [self.view addSubview:_backBtn];
+    [self.view addSubview:_lineImgView];
+    [self.view addSubview:_lineImgView2];
     [self setupMasterView];
     
     
@@ -169,6 +180,8 @@
 - (void)setupMasterView {
     [_earlierBtn setHidden:NO];
     [_backBtn setHidden:YES];
+    [_lineImgView setHidden:YES];
+    [_lineImgView2 setHidden:YES];
     _masterLab.text =@"RI社長";
     
     //scrollView
@@ -260,7 +273,9 @@
 - (void)setupThemeView {
     [_earlierBtn setHidden:NO];
     [_backBtn setHidden:YES];
-    _masterLab.text=@"年度主题";
+    [_lineImgView setHidden:YES];
+    [_lineImgView2 setHidden:NO];
+    _masterLab.text=@"年度主題";
     
     _themeView=[[UIScrollView alloc]initWithFrame:CGRectMake(0.0f, 44.0f, 320.0f, 328.0f)];
     
@@ -268,7 +283,7 @@
     UIImage *oneImg=[UIImage imageNamed:@"theme_toplogo.png"];
     oneImgView.image=oneImg;
     UILabel *oneLab=[[UILabel alloc]initWithFrame:CGRectMake(0.0f, 58.0f, 320.0f, 20.0f)];
-    [oneLab setText:@"国际扶轮"];
+    [oneLab setText:@"國際扶輪"];
     [oneLab setBackgroundColor:[UIColor clearColor]];
     oneLab.textAlignment=UITextAlignmentCenter;
     [oneLab setFont:[UIFont systemFontOfSize:14]];
@@ -280,7 +295,7 @@
     [twoLab setFont:[UIFont systemFontOfSize:13]];
 
     UILabel *threeLab=[[UILabel alloc]initWithFrame:CGRectMake(0.0f, 103.0f, 320.0f, 15.0f)];
-    [threeLab setText:@"年度主题"];
+    [threeLab setText:@"年度主題"];
     [threeLab setBackgroundColor:[UIColor clearColor]];
     threeLab.textAlignment=UITextAlignmentCenter;
     [threeLab setFont:[UIFont systemFontOfSize:14]];
@@ -298,7 +313,7 @@
     line2ImgView.image=line2Img;
     
     UITextView *sixLab=[[UITextView alloc]initWithFrame:CGRectMake(0.0f, 353.5f, 320.0f, 100.0f)];
-    [sixLab setText:@"主题叙述"];
+    [sixLab setText:@"主題敘述"];
     sixLab.textAlignment=UITextAlignmentLeft;
     [sixLab setFont:[UIFont systemFontOfSize:13]];
     sixLab.editable =NO;
@@ -318,6 +333,8 @@
 - (void)setupHistoryView {
     [_earlierBtn setHidden:YES];
     [_backBtn setHidden:YES];
+    [_lineImgView setHidden:YES];
+    [_lineImgView2 setHidden:YES];
     _masterLab.text=@"扶轮沿革";
     
     _historyView=[[UIView alloc]initWithFrame:CGRectMake(0.0f, 44.0f, 320.0f, 328.0f)];
@@ -326,7 +343,7 @@
     UIImage *oneImg=[UIImage imageNamed:@"theme_toplogo.png"];
     oneImgView.image=oneImg;
     UILabel *oneLab=[[UILabel alloc]initWithFrame:CGRectMake(0.0f, 58.0f, 320.0f, 20.0f)];
-    [oneLab setText:@"国际扶轮"];
+    [oneLab setText:@"國際扶輪"];
     [oneLab setBackgroundColor:[UIColor clearColor]];
     oneLab.textAlignment=UITextAlignmentCenter;
     [oneLab setFont:[UIFont systemFontOfSize:13]];
@@ -352,6 +369,8 @@
 - (void)setupKnowledgeView {
     [_earlierBtn setHidden:YES];
     [_backBtn setHidden:YES];
+    [_lineImgView setHidden:YES];
+    [_lineImgView2 setHidden:YES];
     _masterLab.text =@"扶輪知識";
     
     _knowledgeView =[[UIView alloc]initWithFrame:CGRectMake(0.0f, 44.0f, 320.0f, 328.0f)];
@@ -486,43 +505,58 @@
 - (void)setupResponsibilityView {
     [_backBtn setHidden:NO];
     [_earlierBtn setHidden:YES];
+    [_lineImgView setHidden:NO];
+    [_lineImgView2 setHidden:NO];
     _responsibilityView=[[UIView alloc]initWithFrame:CGRectMake(0.0f, 44.0f, 320.0f, 328.0f)];
     
-    UIImageView *topImgView=[[UIImageView alloc]initWithFrame:CGRectMake(110.0f, 0.0f, 100.0f, 60.0f)];
-    UIImage *topImg=[UIImage imageNamed:@"333.jpg"];
-    topImgView.image=topImg;
+    _masterLab.text =@"扶輪知識";
     
-    UILabel *rotaryLab=[[UILabel alloc]initWithFrame:CGRectMake(0.0f, 60.0f, 320.0f, 20.0f)];
-    [rotaryLab setText:@"国际扶轮"];
-    [rotaryLab setBackgroundColor:[UIColor clearColor]];
-    [rotaryLab setTextAlignment:UITextAlignmentCenter];
+    _knowledgeView =[[UIView alloc]initWithFrame:CGRectMake(0.0f, 44.0f, 320.0f, 328.0f)];
     
-    UILabel *knowledgeLab=[[UILabel alloc]initWithFrame:CGRectMake(0.0f, 80.0f, 320.0f, 20.0f)];
-    [knowledgeLab setText:@"扶轮知识"];
-    [knowledgeLab setBackgroundColor:[UIColor clearColor]];
-    [knowledgeLab setTextAlignment:UITextAlignmentCenter];
     
-    UIImageView *line1ImgView=[[UIImageView alloc]initWithFrame:CGRectMake(0.0f, 100.0f, 320.0f, 10.0f)];
-    UIImage *line1Img=[UIImage imageNamed:@"333.jpg"];
+    UIImageView *tradeMarkImgView=[[UIImageView alloc]initWithFrame:CGRectMake(136.25f, 0.0f, 47.5f, 48.0f)];
+    UIImage *tradeMarkImg=[UIImage imageNamed:@"knowledge_toplogo.png"];
+    tradeMarkImgView.image=tradeMarkImg;
+    
+    UILabel *interRotaryLab=[[UILabel alloc]initWithFrame:CGRectMake(0.0f, 53.0f, 320.0f,15.0f)];
+    interRotaryLab.text=@"國際扶輪";
+    interRotaryLab.backgroundColor=[UIColor clearColor];
+    interRotaryLab.textAlignment=UITextAlignmentCenter;
+    [interRotaryLab setFont:[UIFont systemFontOfSize:12]];
+    
+    
+    UILabel *KnowledgeLab=[[UILabel alloc]initWithFrame:CGRectMake(0.0f, 75.0f, 320.0f, 15.0f)];
+    KnowledgeLab.text=@"扶輪知識";
+    KnowledgeLab.backgroundColor=[UIColor clearColor];
+    KnowledgeLab.textAlignment=UITextAlignmentCenter;
+    [KnowledgeLab setFont:[UIFont systemFontOfSize:15]];
+    
+    UIImageView *line1ImgView=[[UIImageView alloc]initWithFrame:CGRectMake(14.25f, 100.0f, 291.5f, 1.0f)];
+    UIImage *line1Img=[UIImage imageNamed:@"knowledge_line.png"];
     line1ImgView.image=line1Img;
     
-    UILabel *responsilibityLab=[[UILabel alloc]initWithFrame:CGRectMake(0.0f, 110.0f, 320.0f, 20.0f)];
-    [responsilibityLab setText:@"社员的责任"];
+//    UIImageView *topImgView=[[UIImageView alloc]initWithFrame:CGRectMake(110.0f, 0.0f, 100.0f, 60.0f)];
+//    UIImage *topImg=[UIImage imageNamed:@"333.jpg"];
+//    topImgView.image=topImg;
+    
+    UILabel *responsilibityLab=[[UILabel alloc]initWithFrame:CGRectMake(14.25f, 110.0f, 320.0f, 20.0f)];
+    [responsilibityLab setText:@"社員的責任"];
     [responsilibityLab setBackgroundColor:[UIColor clearColor]];
     [responsilibityLab setTextAlignment:UITextAlignmentLeft];
     
-    UIImageView *line2ImgView=[[UIImageView alloc]initWithFrame:CGRectMake(0.0f, 130.0f, 320.0f, 10.0f)];
-    UIImage *line2Img=[UIImage imageNamed:@"222.jpg"];
+    UIImageView *line2ImgView=[[UIImageView alloc]initWithFrame:CGRectMake(14.25f, 140.0f, 291.5f, 1.0f)];
+    UIImage *line2Img=[UIImage imageNamed:@"knowledge_line.png"];
     line2ImgView.image=line2Img;
     
-    UILabel *naLab=[[UILabel alloc]initWithFrame:CGRectMake(0.0f, 140.0f, 320.0f, 20.0f)];
+    UILabel *naLab=[[UILabel alloc]initWithFrame:CGRectMake(14.25f, 150.0f, 320.0f, 20.0f)];
     [naLab setText:@"叙述叙述叙述叙述"];
     [naLab setBackgroundColor:[UIColor clearColor]];
+    [naLab setFont:[UIFont systemFontOfSize:13.0f]];
     [naLab setTextAlignment:UITextAlignmentLeft];
     
-    [_responsibilityView addSubview:knowledgeLab];
-    [_responsibilityView addSubview:rotaryLab];
-    [_responsibilityView addSubview:topImgView];
+    [_responsibilityView addSubview:KnowledgeLab];
+    [_responsibilityView addSubview:interRotaryLab];
+    [_responsibilityView addSubview:tradeMarkImgView];
     [_responsibilityView addSubview:line1ImgView];
     [_responsibilityView addSubview:responsilibityLab];
     [_responsibilityView addSubview:line2ImgView];
@@ -575,6 +609,84 @@
     [self.navigationItem setLeftBarButtonItem:leftBarBtn animated:YES];
 }
 
+- (void)setupMasterTableView {
+    
+    _masterHistory =[[UIView alloc]initWithFrame:CGRectMake(6.5f, 31.0f, 307.0f, 368.5f)];
+    [_masterHistory setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"inter_hisBg"]]];
+    
+    UIButton *closeBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+    [closeBtn setFrame:CGRectMake(260.0f, 32.0f, 29.0f, 29.0f)];
+    [closeBtn setImage:[UIImage imageNamed:@"inter_close.png"] forState:UIControlStateNormal];
+    [closeBtn addTarget:self action:@selector(closeBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UILabel *masterHistoryLabel =[[UILabel alloc]initWithFrame:CGRectMake(0.0f, 46.0f, 307.0f, 26.0f)];
+    masterHistoryLabel.text =@"歷屆扶輪社長";
+    masterHistoryLabel.textAlignment =UITextAlignmentCenter;
+    [masterHistoryLabel setBackgroundColor:[UIColor clearColor]];
+    masterHistoryLabel.font =[UIFont systemFontOfSize:18.0f];
+    
+    UIImageView *masterHistoryImage =[[UIImageView alloc]initWithFrame:CGRectMake(26.0f, 68.0f, 255.0f, 9.0f)];
+    masterHistoryImage.image =[UIImage imageNamed:@"inter_hisLine.png"];
+    
+    UITableView *masterHistoryTable =[[UITableView alloc]init];
+    [masterHistoryTable setFrame:CGRectMake(2.0f, 75.0f, 300.0f, 293.5f)];
+    [masterHistoryTable setBackgroundColor:[UIColor clearColor]];
+    masterHistoryTable.delegate =self;
+    masterHistoryTable.dataSource =self;
+    
+    [masterHistoryTable reloadData];
+    [_masterHistory addSubview:masterHistoryImage];
+    [_masterHistory addSubview:masterHistoryLabel];
+    [_masterHistory addSubview:masterHistoryTable];
+    [_masterHistory addSubview:closeBtn];
+    [self.view addSubview:_masterHistory];
+    
+    _earlierBtn.userInteractionEnabled =NO;
+    _riMasterBtn.userInteractionEnabled =NO;
+    _themeBtn.userInteractionEnabled =NO;
+    _historyBtn.userInteractionEnabled =NO;
+    _knowledgeBtn.userInteractionEnabled =NO;
+}
+
+
+- (void)setupThemeTableView {
+    _masterHistory =[[UIView alloc]initWithFrame:CGRectMake(6.5f, 31.0f, 307.0f, 368.5f)];
+    [_masterHistory setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"inter_hisBg"]]];
+    
+    UIButton *closeBtn =[UIButton buttonWithType:UIButtonTypeCustom];
+    [closeBtn setFrame:CGRectMake(260.0f, 32.0f, 29.0f, 29.0f)];
+    [closeBtn setImage:[UIImage imageNamed:@"inter_close.png"] forState:UIControlStateNormal];
+    [closeBtn addTarget:self action:@selector(closeBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UILabel *masterHistoryLabel =[[UILabel alloc]initWithFrame:CGRectMake(0.0f, 46.0f, 307.0f, 26.0f)];
+    masterHistoryLabel.text =@"歷屆年度主題";
+    masterHistoryLabel.textAlignment =UITextAlignmentCenter;
+    [masterHistoryLabel setBackgroundColor:[UIColor clearColor]];
+    masterHistoryLabel.font =[UIFont systemFontOfSize:18.0f];
+    
+    UIImageView *masterHistoryImage =[[UIImageView alloc]initWithFrame:CGRectMake(26.0f, 68.0f, 255.0f, 9.0f)];
+    masterHistoryImage.image =[UIImage imageNamed:@"inter_hisLine.png"];
+    
+    UITableView *masterHistoryTable =[[UITableView alloc]init];
+    [masterHistoryTable setFrame:CGRectMake(2.0f, 75.0f, 300.0f, 293.5f)];
+    [masterHistoryTable setBackgroundColor:[UIColor clearColor]];
+    masterHistoryTable.delegate =self;
+    masterHistoryTable.dataSource =self;
+    
+    [masterHistoryTable reloadData];
+    [_masterHistory addSubview:masterHistoryImage];
+    [_masterHistory addSubview:masterHistoryLabel];
+    [_masterHistory addSubview:masterHistoryTable];
+    [_masterHistory addSubview:closeBtn];
+    [self.view addSubview:_masterHistory];
+    
+    _earlierBtn.userInteractionEnabled =NO;
+    _riMasterBtn.userInteractionEnabled =NO;
+    _themeBtn.userInteractionEnabled =NO;
+    _historyBtn.userInteractionEnabled =NO;
+    _knowledgeBtn.userInteractionEnabled =NO;
+}
+
 #pragma mark - button action
 
 //naviBar Action
@@ -583,7 +695,20 @@
 }
 
 -(void)leftDrawerButtonPress:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (void)historyBtnPressed :(id)sender {
+    switch (_btnTag) {
+        case 1:
+            [self setupMasterTableView];
+            break;
+        case 2:
+            [self setupThemeTableView];
+            break;
+        default:
+            break;
+    }
 }
 
 //button action
@@ -668,6 +793,18 @@
     _btnTag =5;
 }
 
+- (void)closeBtnPressed :(id)sender {
+//    if (_btnTag ==1) {
+        [_masterHistory removeFromSuperview];
+//    }
+    
+    _earlierBtn.userInteractionEnabled =YES;
+    _riMasterBtn.userInteractionEnabled =YES;
+    _themeBtn.userInteractionEnabled =YES;
+    _historyBtn.userInteractionEnabled =YES;
+    _knowledgeBtn.userInteractionEnabled =YES;
+}
+
 #pragma mark - setup tableview
 
 // 共有一个section
@@ -681,30 +818,66 @@
 
 //cell的高度
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 100.0f;
+    switch (_btnTag) {
+        case 1:
+            return 108.0f;
+            break;
+        case 2:
+            return 108.0f;
+            break;
+        case 3:
+            return 100.0f;
+            break;
+        default:
+            return 0.0f;
+            break;
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *CellIdentifier =@"Cell";
-    RotaryHistoryCell *cell = [tableView dequeueReusableCellWithIdentifier:  CellIdentifier];
-    if (cell == nil) {
-        NSArray *xib=[[NSBundle mainBundle] loadNibNamed:@"RotaryHistoryCell" owner:self options:nil];
-        cell =(RotaryHistoryCell *)[xib objectAtIndex:0];
-    }
-    [cell.RotaryHistoryCellTopTextView setEditable:NO];
-    [cell.RotaryHistoryCellBottomTextView setEditable:NO];
-    int i=indexPath.row%2;
-    
-    if (i ==0) {
-        cell.RotaryHistoryCellLab.text=@"1905";
-        cell.RotaryHistoryCellTopTextView.text=@"1.第一個扶輪社在美國醫科羅州芝加哥成立";
-        cell.RotaryHistoryCellBottomTextView.text=@"成立扶少圈";
+    if (_btnTag ==3) {
+        RotaryHistoryCell *cell = [tableView dequeueReusableCellWithIdentifier:  CellIdentifier];
+        if (cell == nil) {
+            NSArray *xib=[[NSBundle mainBundle] loadNibNamed:@"RotaryHistoryCell" owner:self options:nil];
+            cell =(RotaryHistoryCell *)[xib objectAtIndex:0];
+        }
+        [cell.RotaryHistoryCellTopTextView setEditable:NO];
+        [cell.RotaryHistoryCellBottomTextView setEditable:NO];
+        int i=indexPath.row%2;
+        
+        if (i ==0) {
+            cell.RotaryHistoryCellLab.text=@"1905";
+            cell.RotaryHistoryCellTopTextView.text=@"1.第一個扶輪社在美國醫科羅州芝加哥成立";
+            cell.RotaryHistoryCellBottomTextView.text=@"成立扶少圈";
+        }else {
+            cell.RotaryHistoryCellLab.text=@"1995";
+            cell.RotaryHistoryCellTopTextView.text=@"1.第一個扶輪社在美國醫科羅州芝加哥成立";
+            cell.RotaryHistoryCellBottomTextView.text=@"成立扶少圈";
+        }
+        
+        return cell;
+    } else if (_btnTag ==2){
+        RotaryThemeHistoryCell *cell = [tableView dequeueReusableCellWithIdentifier:  CellIdentifier];
+        if (cell == nil) {
+            NSArray *xib=[[NSBundle mainBundle] loadNibNamed:@"RotaryThemeHistoryCell" owner:self options:nil];
+            cell =(RotaryThemeHistoryCell *)[xib objectAtIndex:0];
+        }
+        [cell.themeBtn setImage:[UIImage imageNamed:@"inter_detailBtn.png"] forState:UIControlStateNormal];
+        return cell;
     }else {
-        cell.RotaryHistoryCellLab.text=@"1995";
-        cell.RotaryHistoryCellTopTextView.text=@"1.第一個扶輪社在美國醫科羅州芝加哥成立";
-        cell.RotaryHistoryCellBottomTextView.text=@"成立扶少圈";
+        RotaryMasterHistoryCell *cell = [tableView dequeueReusableCellWithIdentifier:  CellIdentifier];
+        if (cell == nil) {
+            NSArray *xib=[[NSBundle mainBundle] loadNibNamed:@"RotaryMasterHistoryCell" owner:self options:nil];
+            cell =(RotaryMasterHistoryCell *)[xib objectAtIndex:0];
+        }
+        [cell.detailBtn setImage:[UIImage imageNamed:@"inter_detailBtn.png"] forState:UIControlStateNormal];
+        return cell;
     }
-    
-    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
 }
 @end

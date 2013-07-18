@@ -9,9 +9,9 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.rikee.wzy</string>
+	<string>com.rikee.${PRODUCT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
-	<string>5.0</string>
+	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
